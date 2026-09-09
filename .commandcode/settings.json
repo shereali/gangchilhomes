@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Shell(dir:*)",
+      "Shell(powershell -Command \"Get-Content -LiteralPath 'C:\\Users\\shere\\Desktop\\gangchilhomes\\frontend\\pages\\properties\\[id].vue' -TotalCount 260\")",
+      "Shell(dir \"C:\\Users\\shere\\Desktop\\gangchilhomes\\frontend\\node_modules\\lucide-vue-next\\dist\" 2>nul | findstr /i \"es cjs\" | head -5; echo ---; dir \"C:\\Users\\shere\\Desktop\\gangchilhomes\\.commandcode\\taste\")",
+      "Shell(powershell -Command \"Test-Path 'C:\\Users\\shere\\Desktop\\gangchilhomes\\frontend\\node_modules\\lucide-vue-next\\dist'; Get-ChildItem 'C:\\Users\\shere\\Desktop\\gangchilhomes\\frontend\\node_modules\\lucide-vue-next\\dist' -Name | Select-Object -First 5; Write-Output '---'; Get-ChildItem 'C:\\Users\\shere\\Desktop\\gangchilhomes\\.commandcode\\taste' -Name\")",
+      "Shell(npx nuxt build 2 >& 1)",
+      "Shell(npx nuxt build)",
+      "Shell(powershell -Command \"Get-Content 'C:\\Users\\shere\\AppData\\Local\\Temp\\commandcode\\shellout\\2026-08-31T08-54-04-427Z-s0ntyqo3.log' -Tail 20\")",
+      "Shell(npx nuxt dev --port 3000)",
+      "Shell(powershell -Command \"Start-Sleep -Seconds 5; try { $r = Invoke-WebRequest -Uri 'http://localhost:3000' -UseBasicParsing -TimeoutSec 20; Write-Output ('STATUS: ' + $r.StatusCode); Write-Output ('LENGTH: ' + $r.Content.Length); if ($r.Content -match 'GANGCHIL') { Write-Output 'BRAND_FOUND' }; if ($r.Content -match 'Verified Penthouses') { Write-Output 'HERO_FOUND' } } catch { Write-Output ('ERROR: ' + $_.Exception.Message) }\")",
+      "Shell(powershell -Command \"try { $r = Invoke-WebRequest -Uri 'http://localhost:3000' -UseBasicParsing -TimeoutSec 20; $c = $r.Content; if ($c -match 'nuxt') { Write-Output 'NUXT_SHELL_FOUND' }; if ($c -match '<div id=\"\"__nuxt\"\"') { Write-Output 'APP_MOUNT_FOUND' }; Write-Output ($c.Substring(0, [Math]::Min(400, $c.Length))) } catch { Write-Output ('ERROR: ' + $_.Exception.Message) }\")",
+      "Shell(powershell -Command \"Get-NetTCPConnection -LocalPort 3000 -State Listen | Select-Object LocalPort, OwningProcess; Get-Process -Id (Get-NetTCPConnection -LocalPort 3000 -State Listen).OwningProcess | Select-Object Id, ProcessName, Path\")",
+      "Shell(powershell -Command \"Get-CimInstance Win32_Process -Filter 'ProcessId = 4784' | Select-Object ProcessId, Name, CommandLine | Format-List\")",
+      "Shell(npx nuxt dev --port 3003)",
+      "Shell(powershell -Command \"Start-Sleep -Seconds 12; try { $r = Invoke-WebRequest -Uri 'http://localhost:3003' -UseBasicParsing -TimeoutSec 30; Write-Output ('STATUS: ' + $r.StatusCode); $c = $r.Content; if ($c -match 'Gangchil Homes') { Write-Output 'GANGCHIL_TITLE_FOUND' }; if ($c -match 'nuxt') { Write-Output 'NUXT_SHELL_FOUND' } } catch { Write-Output ('ERROR: ' + $_.Exception.Message) }\")",
+      "Shell(powershell -Command \"try { $r = Invoke-WebRequest -Uri 'http://localhost:3003/' -UseBasicParsing -TimeoutSec 30; $c = $r.Content; Write-Output ('LEN: ' + $c.Length); if ($c -match 'Luxury Real Estate') { Write-Output 'TITLE_META_OK' }; if ($c -match 'theme-color') { Write-Output 'THEME_OK' } } catch { Write-Output ('ERROR: ' + $_.Exception.Message) }\")",
+      "Shell(powershell -Command Get-ChildItem *.vue | ForEach-Object {  = Get-Content FullName -Raw;  =  -replace 'color:#94A3B8;', 'color:#CBD5E1;' -replace 'color: #94A3B8;', 'color: #CBD5E1;'; if ( -ne ) { Set-Content FullName  -NoNewline; Write-Output ('Updated: ' + Name) } })",
+      "Shell(powershell -Command \"$b = [System.IO.File]::ReadAllBytes('C:\\Users\\shere\\Desktop\\gangchilhomes\\frontend\\pages\\admin\\users.vue'); Write-Output ('First bytes: ' + $b[0] + ' ' + $b[1] + ' ' + $b[2]); $t = [System.IO.File]::ReadAllText('C:\\Users\\shere\\Desktop\\gangchilhomes\\frontend\\pages\\admin\\users.vue'); Write-Output ('Contains BOM char: ' + $t.StartsWith([char]0xFEFF))\")",
+      "Shell(powershell -Command \"Get-ChildItem 'C:\\Users\\shere\\Desktop\\gangchilhomes\\frontend\\pages\\admin\\*.vue' | ForEach-Object { $b = [System.IO.File]::ReadAllBytes($_.FullName); Write-Output ($_.Name + ': ' + $b[0] + ',' + $b[1]) }\")",
+      "Shell(npx nuxt dev --port 3004)",
+      "Shell(powershell -Command \"Start-Sleep -Seconds 12; try { $r = Invoke-WebRequest -Uri 'http://localhost:3004' -UseBasicParsing -TimeoutSec 30; Write-Output ('STATUS: ' + $r.StatusCode); if ($r.Content -match 'Gangchil') { Write-Output 'GANGCHIL_OK' } } catch { Write-Output ('ERROR: ' + $_.Exception.Message) }\")"
+    ],
+    "deny": [],
+    "defaultMode": "default"
+  }
+}

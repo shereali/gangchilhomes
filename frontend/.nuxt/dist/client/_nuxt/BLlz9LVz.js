@@ -1,0 +1,1 @@
+const o=(r,e)=>!r&&r!==0?"Price on Request":r>=1e7?`৳ ${(r/1e7).toFixed(2).replace(/\.00$/,"")} Crore`+(e?` / ${e}`:""):r>=1e5?`৳ ${(r/1e5).toFixed(2).replace(/\.00$/,"")} Lakh`+(e?` / ${e}`:""):`৳ ${r.toLocaleString("en-IN")}`+(e?` / ${e}`:""),$=(r,e,c)=>e&&c?`${e} ${c}`:r?`${r.toLocaleString()} Sq. Ft.`:"N/A";export{$ as a,o as f};

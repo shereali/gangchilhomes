@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Gangchil Homes - Checkup Report</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+	<style>
+		body { font-family: Inter, ui-sans-serif, system-ui, sans-serif; }
+		.mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+		.report-section { border: 1px solid #222226; background: #0a0a0b; position: relative; }
+		.corner-box { position: absolute; width: 20px; height: 20px; border: 1px solid #222226; background: #000; }
+	</style>
+</head>
+<body class="bg-black text-[#fafafa]">
+	<main class="mx-auto w-full max-w-6xl px-5 py-8 md:px-10 md:py-12">
+		<header class="report-section mb-8 p-6 md:p-8">
+			<div class="corner-box left-0 top-0 -translate-x-1/2 -translate-y-1/2"></div>
+			<div class="corner-box right-0 top-0 translate-x-1/2 -translate-y-1/2"></div>
+			<div class="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+				<div>
+					<div class="mono mb-2 text-xs tracking-widest text-[#666]">// CHECKUP</div>
+					<h1 class="text-4xl font-bold tracking-tight md:text-6xl">Gangchil Homes</h1>
+				</div>
+				<div class="mono text-left text-xs text-[#666] md:text-right">
+					<div>COMMANDCODE REPORT</div>
+					<div class="text-[#444]">2026-08-31</div>
+				</div>
+			</div>
+		</header>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-2 text-xs tracking-widest text-[#666]">VERDICT</div>
+			<div class="text-7xl font-bold tracking-tight text-amber-400">40/60</div>
+			<div class="mt-2 text-sm text-[#999]">WATCH — deslop fixed visuals; keyboard/modal accessibility and iOS form zoom remain.</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-3 text-xs tracking-widest text-[#666]">TL;DR</div>
+			<p class="max-w-3xl text-sm leading-relaxed text-[#ccc]">
+				Intentionality, usability, and speed are now healthy: gradients, emoji icons, stat monuments, and pulse motion are gone, and every flow still works. What blocks shipping is behavioral — no Escape or focus trap on overlays, 0.95rem form inputs that trigger iOS zoom on mobile, and sub-44px touch targets. Next: <span class="text-white">interaction</span> then <span class="text-white">responsive</span>.
+			</p>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-4 text-xs tracking-widest text-[#666]">VITALS</div>
+			<div class="overflow-x-auto">
+				<table class="w-full text-left text-sm">
+					<thead>
+						<tr class="mono border-b border-[#222] text-xs text-[#666]">
+							<th class="py-2 pr-4">VITAL</th>
+							<th class="py-2 pr-4">STATUS</th>
+							<th class="py-2 pr-4">SCORE</th>
+							<th class="py-2">READ</th>
+						</tr>
+					</thead>
+					<tbody class="text-[#bbb]">
+						<tr class="border-b border-[#161616]"><td class="py-3 pr-4 font-semibold text-white">Intentionality</td><td class="py-3 pr-4 text-emerald-400">Healthy</td><td class="py-3 pr-4">10/10</td><td class="py-3">flat, authored, specific to the brief</td></tr>
+						<tr class="border-b border-[#161616]"><td class="py-3 pr-4 font-semibold text-white">Readability</td><td class="py-3 pr-4 text-amber-400">Watch</td><td class="py-3 pr-4">5/10</td><td class="py-3">#94A3B8 on dark still borderline</td></tr>
+						<tr class="border-b border-[#161616]"><td class="py-3 pr-4 font-semibold text-white">Usability</td><td class="py-3 pr-4 text-emerald-400">Healthy</td><td class="py-3 pr-4">10/10</td><td class="py-3">all flows verified post-deslop</td></tr>
+						<tr class="border-b border-[#161616]"><td class="py-3 pr-4 font-semibold text-white">Responsiveness</td><td class="py-3 pr-4 text-amber-400">Watch</td><td class="py-3 pr-4">5/10</td><td class="py-3">0.95rem inputs, sub-44px targets</td></tr>
+						<tr class="border-b border-[#161616]"><td class="py-3 pr-4 font-semibold text-white">Speed</td><td class="py-3 pr-4 text-emerald-400">Healthy</td><td class="py-3 pr-4">10/10</td><td class="py-3">static demo, lazy images, no jank</td></tr>
+						<tr class="border-b border-[#161616]"><td class="py-3 pr-4 font-semibold text-white">Accessibility</td><td class="py-3 pr-4 text-red-400">Critical</td><td class="py-3 pr-4">0/10</td><td class="py-3">no Escape/focus trap on overlays</td></tr>
+						<tr><td class="py-3 pr-4 font-bold text-white">Total</td><td class="py-3 pr-4 text-amber-400">Watch</td><td class="py-3 pr-4 font-bold text-white">40/60</td><td class="py-3">up from 33/60</td></tr>
+					</tbody>
+				</table>
+			</div>
+		</section>
+
+		<section class="report-section mb-8 p-6 md:p-8">
+			<div class="mono mb-4 text-xs tracking-widest text-[#666]">PRESCRIPTIONS</div>
+			<div class="space-y-3 text-sm text-[#bbb]">
+				<div class="border-l-2 border-red-500 pl-4"><span class="text-white font-semibold">Accessibility (blocks shipping):</span> Escape + focus trap + scroll lock on drawer, lightbox, and all modals; aria-labels on lightbox prev/next; 44px touch targets.</div>
+				<div class="border-l-2 border-red-500 pl-4"><span class="text-white font-semibold">iOS zoom (blocks mobile):</span> 1rem form/search inputs under 640px.</div>
+				<div class="border-l-2 border-amber-400 pl-4"><span class="text-white font-semibold">Readability:</span> retire #94A3B8 on dark, use #CBD5E1; retune --color-text-light.</div>
+				<div class="border-l-2 border-amber-400 pl-4"><span class="text-white font-semibold">Interaction:</span> hover:hover scoping so touch devices don't trap hover states.</div>
+			</div>
+		</section>
+
+		<footer class="mono text-xs text-[#444]">GANGCHIL HOMES // CHECKUP // 40/60 // COMMANDCODE DESIGN</footer>
+	</main>
+</body>
+</html>
