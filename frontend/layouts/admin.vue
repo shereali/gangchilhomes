@@ -3,8 +3,24 @@
     <!-- Admin Top Header -->
     <header class="admin-topbar">
       <div class="admin-topbar-inner">
-        <div class="flex items-center gap-4">
-          <NuxtLink to="/admin" class="admin-brand">
+        <!-- Left: Hamburger Toggle (Mobile/Tablet) + Brand + Status -->
+        <div class="admin-topbar-left">
+          <!-- Mobile Menu Hamburger Button (<= 1024px) -->
+          <button 
+            class="admin-hamburger-btn" 
+            @click="mobileNavOpen = true" 
+            aria-label="Open Admin Navigation Menu"
+            title="Open Admin Navigation Menu"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+              <line x1="3" y1="6" x2="21" y2="6"/>
+              <line x1="3" y1="12" x2="21" y2="12"/>
+              <line x1="3" y1="18" x2="21" y2="18"/>
+            </svg>
+          </button>
+
+          <!-- Brand Logo -->
+          <NuxtLink to="/admin" class="admin-brand" title="Gangchil Homes Admin">
             <div class="admin-brand-icon">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
@@ -13,34 +29,44 @@
             </div>
             <div class="admin-brand-text">
               <span class="admin-brand-name">GANGCHIL<span style="color:#D4AF37;">.</span>ADMIN</span>
-              <span class="admin-brand-sub">ENTERPRISE PROPERTY & CRM CONTROL</span>
+              <span class="admin-brand-sub">ENTERPRISE CONTROL</span>
             </div>
           </NuxtLink>
 
-          <div class="system-status-indicator">
+          <!-- Live API Indicator (Responsive) -->
+          <div class="system-status-indicator" title="Laravel 13 API Connected">
             <span class="status-dot"></span>
-            <span>LARAVEL 13 API SYNCED</span>
+            <span class="status-text-full">LARAVEL 13 API SYNCED</span>
+            <span class="status-text-short">API SYNC</span>
           </div>
         </div>
 
-        <div class="flex items-center gap-3">
-          <!-- Live Website Link -->
-          <NuxtLink to="/" class="btn btn-sm btn-outline-white" title="Return to Public Facing Website">
-            <span>View Live Website ↗</span>
+        <!-- Right: Action Buttons & User Profile -->
+        <div class="admin-topbar-right">
+          <!-- View Live Website -->
+          <NuxtLink to="/" class="btn btn-sm btn-outline-white nav-action-btn" title="Return to Public Website">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="action-icon">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+              <polyline points="15 3 21 3 21 9"/>
+              <line x1="10" y1="14" x2="21" y2="3"/>
+            </svg>
+            <span class="action-label-full">Live Site ↗</span>
+            <span class="action-label-short">Site</span>
           </NuxtLink>
 
-          <!-- Quick Add Property Shortcut -->
-          <NuxtLink to="/admin/properties?action=new" class="btn btn-sm btn-gold">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <!-- Quick Add Property -->
+          <NuxtLink to="/admin/properties?action=new" class="btn btn-sm btn-gold nav-action-btn" title="Create New Property Mandate">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <line x1="12" y1="5" x2="12" y2="19"/>
               <line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
-            <span>Add Property</span>
+            <span class="action-label-full">Add Property</span>
+            <span class="action-label-short">Add</span>
           </NuxtLink>
 
           <!-- Admin Avatar Pill -->
-          <div class="admin-user-pill">
-            <img :src="user.avatar" class="admin-user-avatar" />
+          <div class="admin-user-pill" :title="user.name + ' (' + user.role + ')'">
+            <img :src="user.avatar" :alt="user.name" class="admin-user-avatar" />
             <div class="admin-user-info">
               <span class="admin-user-name">{{ user.name }}</span>
               <span class="admin-user-role">{{ user.role.toUpperCase() }}</span>
@@ -48,18 +74,38 @@
           </div>
 
           <!-- Logout Button -->
-          <button class="btn btn-sm btn-outline" style="color: #EF4444; border-color: rgba(239,68,68,0.4);" @click="handleLogout" title="Sign out of Admin Portal">
-            <span>Sign Out</span>
+          <button class="btn btn-sm btn-logout" @click="handleLogout" title="Sign out of Admin Portal" aria-label="Sign out">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            <span class="logout-text">Sign Out</span>
           </button>
         </div>
       </div>
     </header>
 
+    <!-- Mobile/Tablet Quick-Nav Chip Bar (<= 1024px) -->
+    <div class="mobile-quick-nav-bar">
+      <div class="mobile-quick-nav-track">
+        <NuxtLink to="/admin" class="quick-nav-chip" exact-active-class="active">Overview</NuxtLink>
+        <NuxtLink to="/admin/properties" class="quick-nav-chip" active-class="active">Properties</NuxtLink>
+        <NuxtLink to="/admin/approvals" class="quick-nav-chip" active-class="active">Approvals (2)</NuxtLink>
+        <NuxtLink to="/admin/viewings" class="quick-nav-chip" active-class="active">Viewings (4)</NuxtLink>
+        <NuxtLink to="/admin/leads" class="quick-nav-chip" active-class="active">Leads (4)</NuxtLink>
+        <NuxtLink to="/admin/agents" class="quick-nav-chip" active-class="active">Advisors</NuxtLink>
+        <NuxtLink to="/admin/users" class="quick-nav-chip" active-class="active">Users</NuxtLink>
+        <NuxtLink to="/admin/financials" class="quick-nav-chip" active-class="active">Financials</NuxtLink>
+        <NuxtLink to="/admin/settings" class="quick-nav-chip" active-class="active">Settings</NuxtLink>
+      </div>
+    </div>
+
     <!-- Admin Workspace Grid -->
     <div class="admin-workspace-container">
       <div class="admin-workspace-grid">
-        <!-- 1. Dedicated Admin Sidebar -->
-        <aside class="admin-sidebar">
+        <!-- 1. Dedicated Admin Desktop Sidebar (Hidden <= 1024px) -->
+        <aside class="admin-sidebar desktop-only-sidebar">
           <div class="sidebar-section-title">Navigation Hub</div>
           <nav class="sidebar-nav">
             <NuxtLink to="/admin" class="sidebar-link" exact-active-class="active">
@@ -77,7 +123,7 @@
                 <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
               </svg>
               <span>Property Inventory</span>
-              <span class="badge badge-status" style="margin-left:auto; font-size:0.7rem;">CRUD</span>
+              <span class="badge badge-status badge-pill-sm">CRUD</span>
             </NuxtLink>
 
             <NuxtLink to="/admin/approvals" class="sidebar-link" active-class="active">
@@ -86,7 +132,7 @@
                 <path d="M12 3l7 4v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V7l7-4z"/>
               </svg>
               <span>RAJUK / Legal Queue</span>
-              <span class="badge badge-urgent" style="margin-left:auto; font-size:0.7rem;">2 Pending</span>
+              <span class="badge badge-urgent badge-pill-sm">2 Pending</span>
             </NuxtLink>
 
             <NuxtLink to="/admin/viewings" class="sidebar-link" active-class="active">
@@ -97,7 +143,7 @@
                 <line x1="3" y1="10" x2="21" y2="10"/>
               </svg>
               <span>VIP Viewings Log</span>
-              <span class="badge badge-rajuk" style="margin-left:auto; font-size:0.7rem;">4 Tours</span>
+              <span class="badge badge-rajuk badge-pill-sm">4 Tours</span>
             </NuxtLink>
 
             <NuxtLink to="/admin/agents" class="sidebar-link" active-class="active">
@@ -123,7 +169,7 @@
                 <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
               </svg>
               <span>Leads CRM & WhatsApp</span>
-              <span class="badge badge-featured" style="margin-left:auto; font-size:0.7rem;">4 Leads</span>
+              <span class="badge badge-featured badge-pill-sm">4 Leads</span>
             </NuxtLink>
 
             <NuxtLink to="/admin/financials" class="sidebar-link" active-class="active">
@@ -149,7 +195,7 @@
               <span style="font-size:0.75rem; color:#CBD5E1; font-weight:700; text-transform:uppercase;">Escrow Security</span>
               <span style="font-size:0.75rem; color:#10B981; font-weight:800;">100% Guaranteed</span>
             </div>
-            <div style="font-size:0.8rem; color:#E2E8F0; line-height:1.4;">
+            <div style="font-size:0.8rem; color:#94A3B8; line-height:1.4;">
               Zero Title Disputes. All C/S, R/S, B/S Khatians certified by Supreme Court Panel.
             </div>
           </div>
@@ -161,17 +207,159 @@
         </main>
       </div>
     </div>
+
+    <!-- ======================================================================
+         OFF-CANVAS MOBILE & TABLET ADMIN DRAWER (SLIDE-IN <= 1024px)
+         ====================================================================== -->
+    <transition name="drawer-fade">
+      <div v-if="mobileNavOpen" ref="drawerRoot" class="admin-drawer-overlay" @click.self="mobileNavOpen = false">
+        <div class="admin-drawer-panel">
+          <!-- Drawer Header -->
+          <div class="drawer-header">
+            <div class="flex items-center gap-2">
+              <div class="admin-brand-icon" style="width:34px; height:34px;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                  <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+              </div>
+              <span class="admin-brand-name" style="font-size:1.15rem;">GANGCHIL<span style="color:#D4AF37;">.</span>ADMIN</span>
+            </div>
+            <button class="drawer-close-btn" @click="mobileNavOpen = false" aria-label="Close Navigation">✕</button>
+          </div>
+
+          <!-- Drawer User Banner -->
+          <div class="drawer-user-box">
+            <img :src="user.avatar" :alt="user.name" class="drawer-avatar" />
+            <div class="drawer-user-meta">
+              <div class="drawer-name">{{ user.name }}</div>
+              <div class="drawer-email">{{ user.email }}</div>
+              <span class="badge badge-featured badge-pill-sm" style="margin-top:4px;">{{ user.role.toUpperCase() }}</span>
+            </div>
+          </div>
+
+          <!-- Drawer Navigation Links -->
+          <nav class="drawer-nav">
+            <NuxtLink to="/admin" class="drawer-link" exact-active-class="active" @click="mobileNavOpen = false">
+              <svg class="sidebar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="3" width="7" height="9" rx="1"/>
+                <rect x="14" y="3" width="7" height="5" rx="1"/>
+                <rect x="14" y="12" width="7" height="9" rx="1"/>
+                <rect x="3" y="16" width="7" height="5" rx="1"/>
+              </svg>
+              <span>Overview & Analytics</span>
+            </NuxtLink>
+
+            <NuxtLink to="/admin/properties" class="drawer-link" active-class="active" @click="mobileNavOpen = false">
+              <svg class="sidebar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
+              </svg>
+              <span>Property Inventory</span>
+              <span class="badge badge-status badge-pill-sm">CRUD</span>
+            </NuxtLink>
+
+            <NuxtLink to="/admin/approvals" class="drawer-link" active-class="active" @click="mobileNavOpen = false">
+              <svg class="sidebar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 12l2 2 4-4"/>
+                <path d="M12 3l7 4v5c0 5-3.5 8.5-7 10-3.5-1.5-7-5-7-10V7l7-4z"/>
+              </svg>
+              <span>RAJUK / Legal Queue</span>
+              <span class="badge badge-urgent badge-pill-sm">2 Pending</span>
+            </NuxtLink>
+
+            <NuxtLink to="/admin/viewings" class="drawer-link" active-class="active" @click="mobileNavOpen = false">
+              <svg class="sidebar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+              <span>VIP Viewings Log</span>
+              <span class="badge badge-rajuk badge-pill-sm">4 Tours</span>
+            </NuxtLink>
+
+            <NuxtLink to="/admin/agents" class="drawer-link" active-class="active" @click="mobileNavOpen = false">
+              <svg class="sidebar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>
+              </svg>
+              <span>Advisors & Brokers</span>
+            </NuxtLink>
+
+            <NuxtLink to="/admin/users" class="drawer-link" active-class="active" @click="mobileNavOpen = false">
+              <svg class="sidebar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+              <span>Users & RBAC Control</span>
+            </NuxtLink>
+
+            <NuxtLink to="/admin/leads" class="drawer-link" active-class="active" @click="mobileNavOpen = false">
+              <svg class="sidebar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 12h-6l-2 3h-4l-2-3H2"/>
+                <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+              </svg>
+              <span>Leads CRM & WhatsApp</span>
+              <span class="badge badge-featured badge-pill-sm">4 Leads</span>
+            </NuxtLink>
+
+            <NuxtLink to="/admin/financials" class="drawer-link" active-class="active" @click="mobileNavOpen = false">
+              <svg class="sidebar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+              <span>Financials & Escrow</span>
+            </NuxtLink>
+
+            <NuxtLink to="/admin/settings" class="drawer-link" active-class="active" @click="mobileNavOpen = false">
+              <svg class="sidebar-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="3"/>
+                <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+              </svg>
+              <span>System & Bank Config</span>
+            </NuxtLink>
+          </nav>
+
+          <!-- Drawer Footer Action Buttons -->
+          <div class="drawer-footer">
+            <NuxtLink to="/admin/properties?action=new" class="btn btn-gold btn-sm" style="width:100%; margin-bottom:8px;" @click="mobileNavOpen = false">
+              <span>+ Add Property Mandate</span>
+            </NuxtLink>
+            <NuxtLink to="/" class="btn btn-outline-white btn-sm" style="width:100%; margin-bottom:12px;" @click="mobileNavOpen = false">
+              <span>View Live Website ↗</span>
+            </NuxtLink>
+            <button class="btn btn-sm btn-logout-full" @click="handleLogout">
+              <span>Sign Out of Admin</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script setup lang="ts">
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuth } from '~/composables/useAuth'
+import { useOverlayBehavior } from '~/composables/useOverlayBehavior'
 
 const router = useRouter()
 const { user, logout } = useAuth()
 
+const mobileNavOpen = ref(false)
+const drawerRoot = ref<HTMLElement | null>(null)
+
+useOverlayBehavior(mobileNavOpen, () => { mobileNavOpen.value = false }, drawerRoot)
+
+// Close drawer automatically on route change
+watch(() => router.currentRoute.value.path, () => {
+  mobileNavOpen.value = false
+})
+
 const handleLogout = async () => {
+  mobileNavOpen.value = false
   await logout()
   router.push('/login')
 }
@@ -183,14 +371,17 @@ const handleLogout = async () => {
   min-height: 100vh;
   font-family: var(--font-sans);
   color: #E2E8F0;
+  overflow-x: hidden;
 }
 
+/* 1. Admin Topbar */
 .admin-topbar {
   background: #0F172A;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   position: sticky;
   top: 0;
   z-index: 100;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
 
 .admin-topbar-inner {
@@ -199,9 +390,35 @@ const handleLogout = async () => {
   justify-content: space-between;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 16px 24px;
-  flex-wrap: wrap;
+  padding: 12px 24px;
   gap: 16px;
+  min-height: 68px;
+}
+
+.admin-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.admin-hamburger-btn {
+  display: none;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #FFFFFF;
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.admin-hamburger-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
 }
 
 .admin-brand {
@@ -209,33 +426,37 @@ const handleLogout = async () => {
   align-items: center;
   gap: 10px;
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .admin-brand-icon {
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   background: var(--color-gold);
   border-radius: 10px;
   color: #0A1128;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(212, 175, 55, 0.25);
 }
 
 .admin-brand-name {
   font-family: var(--font-display);
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 800;
   color: #FFFFFF;
   line-height: 1.1;
   display: block;
+  letter-spacing: -0.01em;
 }
 
 .admin-brand-sub {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   color: var(--color-gold);
   font-weight: 700;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   display: block;
 }
 
@@ -246,10 +467,11 @@ const handleLogout = async () => {
   background: rgba(16, 185, 129, 0.12);
   border: 1px solid rgba(16, 185, 129, 0.25);
   color: #10B981;
-  padding: 4px 12px;
+  padding: 4px 10px;
   border-radius: 20px;
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .status-dot {
@@ -258,40 +480,140 @@ const handleLogout = async () => {
   border-radius: 50%;
   background: #10B981;
   box-shadow: 0 0 8px #10B981;
+  flex-shrink: 0;
+}
+
+.status-text-short {
+  display: none;
+}
+
+.admin-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.nav-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.action-label-short {
+  display: none;
 }
 
 .admin-user-pill {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 4px 12px 4px 6px;
+  padding: 3px 10px 3px 4px;
   border-radius: var(--radius-full);
 }
 
 .admin-user-avatar {
-  width: 32px;
-  height: 32px;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid var(--color-gold);
+  flex-shrink: 0;
 }
 
 .admin-user-name {
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 700;
   color: #FFFFFF;
   display: block;
   line-height: 1.2;
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .admin-user-role {
-  font-size: 0.72rem;
-  color: #CBD5E1;
+  font-size: 0.65rem;
+  color: var(--color-gold-bright);
+  font-weight: 700;
   display: block;
 }
 
+.btn-logout {
+  color: #EF4444;
+  border-color: rgba(239, 68, 68, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+}
+
+.btn-logout:hover {
+  background: rgba(239, 68, 68, 0.15);
+  color: #FFFFFF;
+}
+
+.btn-logout-full {
+  width: 100%;
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #FCA5A5;
+  font-weight: 600;
+  padding: 8px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-logout-full:hover {
+  background: rgba(239, 68, 68, 0.22);
+  color: #FFFFFF;
+}
+
+/* 2. Mobile Quick-Nav Chip Bar */
+.mobile-quick-nav-bar {
+  display: none;
+  background: #0D1527;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-quick-nav-track {
+  display: flex;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.quick-nav-chip {
+  padding: 5px 12px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #CBD5E1;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.quick-nav-chip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+}
+
+.quick-nav-chip.active {
+  background: var(--color-emerald);
+  border-color: var(--color-emerald);
+  color: #FFFFFF;
+}
+
+/* 3. Admin Workspace Grid */
 .admin-workspace-container {
   max-width: 1440px;
   margin: 0 auto;
@@ -302,6 +624,7 @@ const handleLogout = async () => {
   display: grid;
   grid-template-columns: 260px 1fr;
   gap: 24px;
+  align-items: start;
 }
 
 .admin-sidebar {
@@ -310,6 +633,7 @@ const handleLogout = async () => {
   border-radius: var(--radius-xl);
   padding: 20px;
   height: fit-content;
+  box-shadow: var(--shadow-sm);
 }
 
 .sidebar-section-title {
@@ -332,7 +656,7 @@ const handleLogout = async () => {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 11px 14px;
+  padding: 10px 14px;
   background: transparent;
   color: #CBD5E1;
   border-radius: var(--radius-md);
@@ -345,7 +669,7 @@ const handleLogout = async () => {
 }
 
 .sidebar-link:hover {
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.05);
   color: #FFFFFF;
 }
 
@@ -361,6 +685,17 @@ const handleLogout = async () => {
   color: var(--color-gold-bright);
 }
 
+.sidebar-link.active .sidebar-icon {
+  color: #FFFFFF;
+}
+
+.badge-pill-sm {
+  margin-left: auto;
+  font-size: 0.68rem;
+  padding: 2px 7px;
+  border-radius: var(--radius-full);
+}
+
 .sidebar-system-card {
   margin-top: 24px;
   padding: 16px;
@@ -373,33 +708,209 @@ const handleLogout = async () => {
   min-width: 0;
 }
 
+/* 4. Slide-in Mobile Drawer (<= 1024px) */
+.admin-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 2000;
+  display: flex;
+}
+
+.admin-drawer-panel {
+  width: 290px;
+  max-width: 85vw;
+  height: 100%;
+  background: #0A1128;
+  border-right: 1px solid rgba(212, 175, 55, 0.25);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  box-shadow: 15px 0 35px rgba(0, 0, 0, 0.6);
+  overflow-y: auto;
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 16px;
+}
+
+.drawer-close-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #FFFFFF;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.drawer-user-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  padding: 12px;
+  border-radius: var(--radius-lg);
+  margin-bottom: 18px;
+}
+
+.drawer-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--color-gold);
+  flex-shrink: 0;
+}
+
+.drawer-user-meta {
+  overflow: hidden;
+}
+
+.drawer-name {
+  font-weight: 700;
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawer-email {
+  font-size: 0.74rem;
+  color: #94A3B8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  margin-bottom: 20px;
+}
+
+.drawer-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  color: #CBD5E1;
+  font-size: 0.92rem;
+  font-weight: 600;
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.drawer-link:hover, .drawer-link.active {
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFFFFF;
+}
+
+.drawer-link.active {
+  background: var(--color-emerald);
+  color: #FFFFFF;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+}
+
+.drawer-footer {
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.drawer-fade-enter-active, .drawer-fade-leave-active {
+  transition: opacity 0.22s ease;
+}
+.drawer-fade-enter-from, .drawer-fade-leave-to {
+  opacity: 0;
+}
+
+/* 5. Responsive Breakpoint Rules */
 @media (max-width: 1024px) {
+  .admin-hamburger-btn {
+    display: flex !important;
+  }
+  .desktop-only-sidebar {
+    display: none !important;
+  }
+  .mobile-quick-nav-bar {
+    display: block !important;
+  }
   .admin-workspace-grid {
     grid-template-columns: 1fr;
     gap: 16px;
   }
-  .sidebar-nav {
-    flex-direction: row;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 8px;
-  }
-  .sidebar-link {
-    white-space: nowrap;
-    flex-shrink: 0;
-    width: auto;
-  }
-  .sidebar-system-card {
-    display: none;
+  .admin-workspace-container {
+    padding: 16px;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .admin-topbar-inner {
-    padding: 12px 16px;
+    padding: 10px 14px;
+    gap: 10px;
+  }
+  .admin-brand-sub {
+    display: none;
+  }
+  .status-text-full {
+    display: none;
+  }
+  .status-text-short {
+    display: inline;
+  }
+  .admin-user-info {
+    display: none;
   }
   .admin-user-pill {
+    padding: 2px;
+    border-radius: 50%;
+  }
+  .logout-text {
     display: none;
+  }
+  .btn-logout {
+    padding: 8px;
+    border-radius: var(--radius-sm);
+  }
+  .admin-workspace-container {
+    padding: 14px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .system-status-indicator {
+    display: none;
+  }
+  .action-label-full {
+    display: none;
+  }
+  .action-label-short {
+    display: inline;
+  }
+  .admin-brand-name {
+    font-size: 1.05rem;
+  }
+  .admin-brand-icon {
+    width: 32px;
+    height: 32px;
+  }
+  .admin-hamburger-btn {
+    width: 38px;
+    height: 38px;
   }
 }
 </style>

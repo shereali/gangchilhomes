@@ -1,100 +1,143 @@
 <template>
   <div class="admin-page animate-fade-in">
-    <div class="flex justify-between items-start flex-wrap gap-4" style="margin-bottom: 24px;">
+    <!-- 1. Executive Dashboard Header -->
+    <div class="admin-header-row">
       <div>
         <h1 class="page-title">Executive Intelligence & KPI Analytics</h1>
-        <p class="page-subtitle">Real-time asset valuation, regional capital allocation, and transaction pipeline across Bangladesh.</p>
+        <p class="page-subtitle">Real-time portfolio valuation, regional capital allocation, and transaction pipeline across Bangladesh.</p>
       </div>
-      <div class="flex gap-2">
-        <button class="btn btn-sm btn-outline-white" @click="exportReport">
+      <div class="admin-header-actions">
+        <button class="btn btn-sm btn-outline-white" @click="exportReport" title="Export Executive Audit Report">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>
           </svg>
-          Export Audit Report
+          <span>Export Report</span>
         </button>
         <NuxtLink to="/admin/properties" class="btn btn-sm btn-emerald">
-          View Property Catalog →
+          <span>Property Catalog →</span>
         </NuxtLink>
       </div>
     </div>
 
-    <!-- 4 Top KPI Metric Cards -->
-    <div class="grid grid-4" style="margin-bottom: 28px;">
+    <!-- 2. Top 4 KPI Metric Cards (Responsive Grid) -->
+    <div class="kpi-grid">
+      <!-- KPI 1: Portfolio Valuation -->
       <div class="kpi-card">
-        <div class="kpi-label">Total Portfolio Asset Valuation</div>
-        <div class="kpi-value text-emerald">৳ {{ totalPortfolioCrores }} Crore</div>
+        <div class="kpi-header">
+          <span class="kpi-label">Total Asset Valuation</span>
+          <span class="kpi-icon-pill emerald">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+          </span>
+        </div>
+        <div class="kpi-value text-emerald">৳ {{ totalPortfolioCrores }} Cr</div>
         <div class="kpi-sub">
-          <span style="color:#10B981;">↑ +18.2%</span> vs last quarter across 4 divisions
+          <span style="color:#10B981; font-weight:700;">↑ +18.2%</span> vs last quarter in 4 divisions
         </div>
       </div>
 
+      <!-- KPI 2: Active Mandates -->
       <div class="kpi-card">
-        <div class="kpi-label">Active Property Mandates</div>
+        <div class="kpi-header">
+          <span class="kpi-label">Active Mandates</span>
+          <span class="kpi-icon-pill gold">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </span>
+        </div>
         <div class="kpi-value text-gold">{{ properties.length }} Assets</div>
         <div class="kpi-sub">
           {{ flatsCount }} Flats • {{ plotsCount }} Plots • {{ resortsCount }} Resorts
         </div>
       </div>
 
+      <!-- KPI 3: VIP Inspections -->
       <div class="kpi-card">
-        <div class="kpi-label">VIP Site Viewings Scheduled</div>
-        <div class="kpi-value" style="color:#60A5FA;">{{ viewingsCount }} Inspections</div>
+        <div class="kpi-header">
+          <span class="kpi-label">VIP Site Viewings</span>
+          <span class="kpi-icon-pill blue">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/>
+              <line x1="8" y1="2" x2="8" y2="6"/>
+              <line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </span>
+        </div>
+        <div class="kpi-value text-blue">{{ viewingsCount }} Tours</div>
         <div class="kpi-sub">
           Gulshan, Purbachal & Inani Beach
         </div>
       </div>
 
+      <!-- KPI 4: Active CRM Leads -->
       <div class="kpi-card">
-        <div class="kpi-label">Active Leads & Inquiries</div>
-        <div class="kpi-value" style="color:#F43F5E;">4 Leads</div>
+        <div class="kpi-header">
+          <span class="kpi-label">Active CRM Leads</span>
+          <span class="kpi-icon-pill rose">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 12h-6l-2 3h-4l-2-3H2"/>
+              <path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/>
+            </svg>
+          </span>
+        </div>
+        <div class="kpi-value text-rose">4 Leads</div>
         <div class="kpi-sub">
-          Avg 14.5 min response time SLA
+          Avg 14.5 min response SLA
         </div>
       </div>
     </div>
 
-    <!-- Regional Capital Allocation & Urgent Queue -->
-    <div class="grid grid-2" style="margin-bottom: 28px;">
-      <!-- Regional Allocation Breakdown -->
+    <!-- 3. Regional Allocation & Urgent Queue (Split Grid) -->
+    <div class="split-grid">
+      <!-- Regional Capital Allocation -->
       <div class="panel-card">
-        <h3 class="panel-title">Regional Capital Allocation (BDT)</h3>
-        <p class="panel-sub">Asset distribution across prime Bangladeshi corridors</p>
-        
-        <div style="display:flex; flex-direction:column; gap:16px; margin-top:20px;">
+        <div class="panel-header">
           <div>
-            <div class="flex justify-between" style="font-size:0.85rem; margin-bottom:6px;">
-              <span><strong>Dhaka North</strong> (Gulshan, Banani, Purbachal New Town)</span>
-              <span class="text-emerald"><strong>৳ 220.5 Cr (57%)</strong></span>
+            <h3 class="panel-title">Regional Capital Allocation (BDT)</h3>
+            <p class="panel-sub">Asset distribution across prime Bangladeshi corridors</p>
+          </div>
+        </div>
+
+        <div class="regional-bars-list">
+          <div class="regional-bar-item">
+            <div class="region-row-header">
+              <span class="region-name"><strong>Dhaka North</strong> (Gulshan, Banani, Purbachal)</span>
+              <span class="region-val text-emerald"><strong>৳ 220.5 Cr (57%)</strong></span>
             </div>
             <div class="progress-track">
               <div class="progress-fill" style="width: 57%; background: #10B981;"></div>
             </div>
           </div>
 
-          <div>
-            <div class="flex justify-between" style="font-size:0.85rem; margin-bottom:6px;">
-              <span><strong>Dhaka South</strong> (Dhanmondi, Jalshiri, Keraniganj)</span>
-              <span style="color:#3B82F6;"><strong>৳ 68.0 Cr (18%)</strong></span>
+          <div class="regional-bar-item">
+            <div class="region-row-header">
+              <span class="region-name"><strong>Dhaka South</strong> (Dhanmondi, Jalshiri, Keraniganj)</span>
+              <span class="region-val text-blue"><strong>৳ 68.0 Cr (18%)</strong></span>
             </div>
             <div class="progress-track">
               <div class="progress-fill" style="width: 18%; background: #3B82F6;"></div>
             </div>
           </div>
 
-          <div>
-            <div class="flex justify-between" style="font-size:0.85rem; margin-bottom:6px;">
-              <span><strong>Chittagong & Cox's Bazar</strong> (Marine Drive Resorts)</span>
-              <span class="text-gold"><strong>৳ 54.0 Cr (14%)</strong></span>
+          <div class="regional-bar-item">
+            <div class="region-row-header">
+              <span class="region-name"><strong>Chittagong & Cox's Bazar</strong> (Marine Drive)</span>
+              <span class="region-val text-gold"><strong>৳ 54.0 Cr (14%)</strong></span>
             </div>
             <div class="progress-track">
               <div class="progress-fill" style="width: 14%; background: #D4AF37;"></div>
             </div>
           </div>
 
-          <div>
-            <div class="flex justify-between" style="font-size:0.85rem; margin-bottom:6px;">
-              <span><strong>Sylhet Division</strong> (Sreemangal Tea Estates)</span>
-              <span style="color:#EC4899;"><strong>৳ 42.9 Cr (11%)</strong></span>
+          <div class="regional-bar-item">
+            <div class="region-row-header">
+              <span class="region-name"><strong>Sylhet Division</strong> (Sreemangal Tea Estates)</span>
+              <span class="region-val text-pink"><strong>৳ 42.9 Cr (11%)</strong></span>
             </div>
             <div class="progress-track">
               <div class="progress-fill" style="width: 11%; background: #EC4899;"></div>
@@ -103,90 +146,129 @@
         </div>
       </div>
 
-      <!-- Urgent Review Queue -->
+      <!-- Urgent Review & Action Queue -->
       <div class="panel-card">
-        <div class="flex justify-between items-center" style="margin-bottom:14px;">
-          <h3 class="panel-title">Urgent Review & Action Queue</h3>
-          <NuxtLink to="/admin/approvals" class="btn btn-sm btn-outline-white">View Queue</NuxtLink>
+        <div class="panel-header flex justify-between items-center">
+          <div>
+            <h3 class="panel-title">Urgent Review & Action Queue</h3>
+            <p class="panel-sub">Pending title checks and high-priority logistics</p>
+          </div>
+          <NuxtLink to="/admin/approvals" class="btn btn-sm btn-outline-white">View All</NuxtLink>
         </div>
 
-        <div style="display:flex; flex-direction:column; gap:12px;">
-          <div class="action-queue-item">
-            <div class="flex items-center gap-3">
-              <span style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; color: #D4AF37;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <div class="action-queue-list">
+          <div class="action-queue-item border-gold">
+            <div class="action-queue-content">
+              <span class="action-icon-badge gold">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
                   <polyline points="14 2 14 8 20 8"/>
                   <line x1="9" y1="13" x2="15" y2="13"/>
                 </svg>
               </span>
-              <div>
-                <strong style="color:#FFF; font-size:0.92rem;">7.5 Katha Plot in Purbachal Sector 20</strong>
-                <div style="font-size:0.78rem; color:#CBD5E1;">Seller: Kazi Rashed • Asking: ৳ 2.70 Cr • Allotment Uploaded</div>
+              <div class="action-text">
+                <strong class="action-title">7.5 Katha Plot in Purbachal Sector 20</strong>
+                <div class="action-meta">Seller: Kazi Rashed • Asking: ৳ 2.70 Cr • Allotment Uploaded</div>
               </div>
             </div>
-            <NuxtLink to="/admin/approvals" class="btn btn-sm btn-gold">
-              Verify
+            <NuxtLink to="/admin/approvals" class="btn btn-sm btn-gold action-btn">
+              <span>Verify Deed</span>
             </NuxtLink>
           </div>
 
-          <div class="action-queue-item" style="border-left-color: #60A5FA;">
-            <div class="flex items-center gap-3">
-              <span style="width: 36px; height: 36px; border-radius: 8px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; color: #60A5FA;">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <div class="action-queue-item border-blue">
+            <div class="action-queue-content">
+              <span class="action-icon-badge blue">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M5 17h14M5 17l-2 4M19 17l2 4M12 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM5 17v-3a7 7 0 0 1 14 0v3"/>
                 </svg>
               </span>
-              <div>
-                <strong style="color:#FFF; font-size:0.92rem;">VIP Chauffeur Pickup Assigned</strong>
-                <div style="font-size:0.78rem; color:#CBD5E1;">Dr. Kabir Hossain • Airport to Purbachal Sector 17</div>
+              <div class="action-text">
+                <strong class="action-title">VIP Chauffeur Pickup Assigned</strong>
+                <div class="action-meta">Dr. Kabir Hossain • Airport to Purbachal Sector 17</div>
               </div>
             </div>
-            <NuxtLink to="/admin/viewings" class="btn btn-sm btn-outline-white">
-              Logistics
+            <NuxtLink to="/admin/viewings" class="btn btn-sm btn-outline-white action-btn">
+              <span>Logistics</span>
             </NuxtLink>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Recently Added Property Mandates -->
-    <div class="panel-card">
-      <div class="flex justify-between items-center" style="margin-bottom: 16px;">
-        <h3 class="panel-title">Recently Added Property Mandates</h3>
+    <!-- 4. Recently Added Property Mandates (Dual View: Desktop Table + Mobile Cards) -->
+    <div class="panel-card" style="padding: 0; overflow: hidden;">
+      <div class="panel-header-padded">
+        <div>
+          <h3 class="panel-title">Recently Added Property Mandates</h3>
+          <p class="panel-sub">Latest inventory added across residential and commercial sectors</p>
+        </div>
         <NuxtLink to="/admin/properties" class="btn btn-sm btn-outline-white">Full Inventory →</NuxtLink>
       </div>
 
-      <div class="table-responsive">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Property Name</th>
-              <th>Category</th>
-              <th>Location</th>
-              <th>Price (BDT)</th>
-              <th>Verification</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="p in properties.slice(0, 4)" :key="p.id">
-              <td>
-                <strong style="color:#FFF;">{{ p.title }}</strong>
-              </td>
-              <td><span class="badge badge-status">{{ p.propertyType }}</span></td>
-              <td style="color:#CBD5E1;">{{ p.areaName }}, {{ p.city }}</td>
-              <td style="font-weight:800; color:#10B981;">{{ formatBDT(p.price) }}</td>
-              <td>
-                <span v-if="p.isRajukApproved" class="badge badge-rajuk">RAJUK Pass</span>
-                <span v-else class="badge badge-status">Municipal</span>
-              </td>
-              <td>
-                <span class="badge badge-status">{{ p.status }}</span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Desktop & Tablet Table View (> 768px) -->
+      <div class="desktop-table-view">
+        <div class="table-responsive">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Property Name</th>
+                <th>Category</th>
+                <th>Location</th>
+                <th>Price (BDT)</th>
+                <th>Verification</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="p in properties.slice(0, 4)" :key="'dt-' + p.id">
+                <td>
+                  <strong style="color:#FFF;">{{ p.title }}</strong>
+                </td>
+                <td><span class="badge badge-status">{{ p.propertyType }}</span></td>
+                <td style="color:#CBD5E1;">{{ p.areaName }}, {{ p.city }}</td>
+                <td style="font-weight:800; color:#10B981;">{{ formatBDT(p.price) }}</td>
+                <td>
+                  <span v-if="p.isRajukApproved" class="badge badge-rajuk">RAJUK Pass</span>
+                  <span v-else class="badge badge-status">Municipal</span>
+                </td>
+                <td>
+                  <span class="badge badge-status">{{ p.status }}</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Mobile Mandates Card View (<= 768px) -->
+      <div class="mobile-mandates-list">
+        <div v-for="p in properties.slice(0, 4)" :key="'m-' + p.id" class="mobile-mandate-card">
+          <div class="flex justify-between items-start gap-2">
+            <div style="flex: 1; min-width: 0;">
+              <span class="badge badge-status" style="margin-bottom: 6px; font-size: 0.7rem;">{{ p.propertyType }}</span>
+              <h4 class="mobile-mandate-title">{{ p.title }}</h4>
+              <div class="mobile-mandate-location">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                  <circle cx="12" cy="10" r="3"/>
+                </svg>
+                <span>{{ p.areaName }}, {{ p.city }}</span>
+              </div>
+            </div>
+            <span class="badge" :class="p.isRajukApproved ? 'badge-rajuk' : 'badge-status'" style="flex-shrink: 0; font-size: 0.7rem;">
+              {{ p.isRajukApproved ? 'RAJUK' : 'Municipal' }}
+            </span>
+          </div>
+
+          <div class="mobile-mandate-footer">
+            <div>
+              <span class="val-label">Valuation</span>
+              <div class="val-num">{{ formatBDT(p.price) }}</div>
+            </div>
+            <span class="badge badge-status" style="font-size: 0.72rem;">{{ p.status }}</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -219,8 +301,18 @@ const exportReport = () => {
 </script>
 
 <style scoped>
+/* 1. Header Row */
+.admin-header-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
 .page-title {
-  font-size: 1.85rem;
+  font-size: clamp(1.35rem, 3.2vw, 1.85rem);
   font-weight: 800;
   color: #FFFFFF;
   line-height: 1.2;
@@ -228,63 +320,174 @@ const exportReport = () => {
 
 .page-subtitle {
   color: #CBD5E1;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   margin-top: 4px;
+  max-width: 680px;
+  line-height: 1.5;
+}
+
+.admin-header-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* 2. KPI Metrics Grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 24px;
 }
 
 .kpi-card {
   background: #0F172A;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: var(--radius-xl);
-  padding: 22px;
+  padding: 20px;
   box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+}
+
+.kpi-card:hover {
+  border-color: rgba(212, 175, 55, 0.3);
+  transform: translateY(-2px);
+}
+
+.kpi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 4px;
 }
 
 .kpi-label {
-  font-size: 0.78rem;
-  color: #CBD5E1;
+  font-size: 0.74rem;
+  color: #94A3B8;
   text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+}
+
+.kpi-icon-pill {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.kpi-icon-pill.emerald {
+  background: rgba(16, 185, 129, 0.12);
+  color: #10B981;
+}
+
+.kpi-icon-pill.gold {
+  background: rgba(212, 175, 55, 0.12);
+  color: #D4AF37;
+}
+
+.kpi-icon-pill.blue {
+  background: rgba(96, 165, 250, 0.12);
+  color: #60A5FA;
+}
+
+.kpi-icon-pill.rose {
+  background: rgba(244, 63, 94, 0.12);
+  color: #F43F5E;
 }
 
 .kpi-value {
   font-family: var(--font-ui);
-  font-size: 1.8rem;
+  font-size: clamp(1.4rem, 2.5vw, 1.85rem);
   font-weight: 800;
   margin: 6px 0;
   line-height: 1.1;
   font-variant-numeric: tabular-nums;
 }
 
+.text-blue { color: #60A5FA; }
+.text-rose { color: #F43F5E; }
+.text-pink { color: #EC4899; }
+
 .kpi-sub {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: #64748B;
+  line-height: 1.3;
+}
+
+/* 3. Split Grid (Regional Allocation & Urgent Queue) */
+.split-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-bottom: 24px;
 }
 
 .panel-card {
   background: #0F172A;
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: var(--radius-xl);
-  padding: 24px;
+  padding: 22px;
+}
+
+.panel-header {
+  margin-bottom: 16px;
+}
+
+.panel-header-padded {
+  padding: 20px 22px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 .panel-title {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 800;
   color: #FFFFFF;
 }
 
 .panel-sub {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: #CBD5E1;
   margin-top: 2px;
+}
+
+.regional-bars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 14px;
+}
+
+.region-row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 0.84rem;
+  margin-bottom: 6px;
+}
+
+.region-name {
+  color: #E2E8F0;
 }
 
 .progress-track {
   width: 100%;
   height: 8px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.07);
   border-radius: 4px;
   overflow: hidden;
 }
@@ -292,6 +495,13 @@ const exportReport = () => {
 .progress-fill {
   height: 100%;
   border-radius: 4px;
+}
+
+.action-queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 14px;
 }
 
 .action-queue-item {
@@ -302,34 +512,196 @@ const exportReport = () => {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 14px;
+}
+
+.action-queue-item.border-blue {
+  border-left-color: #60A5FA;
+}
+
+.action-queue-content {
+  display: flex;
+  align-items: center;
   gap: 12px;
+  min-width: 0;
+}
+
+.action-icon-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.action-icon-badge.gold { color: #D4AF37; }
+.action-icon-badge.blue { color: #60A5FA; }
+
+.action-text {
+  min-width: 0;
+}
+
+.action-title {
+  color: #FFFFFF;
+  font-size: 0.9rem;
+  display: block;
+  line-height: 1.3;
+}
+
+.action-meta {
+  font-size: 0.76rem;
+  color: #CBD5E1;
+  margin-top: 2px;
+  line-height: 1.3;
+}
+
+.action-btn {
+  flex-shrink: 0;
+}
+
+/* 4. Table & Mobile Mandates Card View */
+.desktop-table-view {
+  display: block;
 }
 
 .table-responsive {
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .admin-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 780px;
+  min-width: 700px;
 }
 
 .admin-table th {
-  padding: 14px 16px;
+  padding: 12px 18px;
   text-align: left;
   background: rgba(255, 255, 255, 0.02);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: 0.78rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.75rem;
   color: #CBD5E1;
   text-transform: uppercase;
   font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
 .admin-table td {
-  padding: 14px 16px;
+  padding: 14px 18px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   vertical-align: middle;
+}
+
+.admin-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.mobile-mandates-list {
+  display: none;
+  padding: 14px;
+  gap: 12px;
+}
+
+.mobile-mandate-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  padding: 14px;
+}
+
+.mobile-mandate-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+
+.mobile-mandate-location {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: #CBD5E1;
+}
+
+.mobile-mandate-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.val-label {
+  display: block;
+  font-size: 0.68rem;
+  color: #94A3B8;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.val-num {
+  font-weight: 800;
+  font-size: 1.05rem;
+  color: #10B981;
+}
+
+/* 5. Responsive Breakpoints */
+@media (max-width: 1024px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .split-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .desktop-table-view {
+    display: none;
+  }
+  .mobile-mandates-list {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-header-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .admin-header-actions {
+    width: 100%;
+  }
+  .admin-header-actions .btn {
+    flex: 1;
+    justify-content: center;
+  }
+  .action-queue-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .action-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .kpi-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
 }
 </style>
