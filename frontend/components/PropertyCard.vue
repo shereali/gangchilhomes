@@ -2,7 +2,13 @@
   <div class="property-card">
     <!-- Media Wrapper -->
     <div class="card-media-wrapper">
-      <img :src="property.images[0]" :alt="property.title" class="card-image" loading="lazy" />
+      <img 
+        :src="(property.images && property.images.length > 0) ? property.images[0] : defaultCardImage" 
+        :alt="property.title" 
+        class="card-image" 
+        loading="lazy" 
+        @error="onImageError"
+      />
       
       <!-- Top Badges -->
       <div class="card-badge-container">
@@ -175,4 +181,12 @@ defineProps<{
 
 const { isPropertySaved, toggleSaveProperty } = useAuth()
 const { isInCompare, toggleCompare } = useCompare()
+
+const defaultCardImage = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800&auto=format&fit=crop'
+const onImageError = (event: Event) => {
+  const target = event.target as HTMLImageElement
+  if (target && target.src !== defaultCardImage) {
+    target.src = defaultCardImage
+  }
+}
 </script>

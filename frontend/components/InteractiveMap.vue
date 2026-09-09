@@ -63,8 +63,11 @@ const renderMarkers = (L: any) => {
   const bounds: any[] = []
 
   props.properties.forEach(prop => {
-    if (prop.lat && prop.lng) {
-      bounds.push([prop.lat, prop.lng])
+    const lat = prop.lat ?? (prop as any).latitude
+    const lng = prop.lng ?? (prop as any).longitude
+
+    if (lat && lng) {
+      bounds.push([lat, lng])
 
       // Custom HTML Marker with Price Tag
       const priceFormatted = formatBDT(prop.price)
@@ -95,12 +98,16 @@ const renderMarkers = (L: any) => {
         iconAnchor: [40, 15]
       })
 
-      const marker = L.marker([prop.lat, prop.lng], { icon: customIcon })
+      const marker = L.marker([lat, lng], { icon: customIcon })
+
+      const firstImage = (prop.images && prop.images.length > 0)
+        ? prop.images[0]
+        : 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=600&auto=format&fit=crop'
 
       // Popup Content Card on Click/Hover
       const popupHtml = `
         <div style="width: 220px; font-family: 'Plus Jakarta Sans', sans-serif;">
-          <img src="${prop.images[0]}" style="width: 100%; height: 110px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />
+          <img src="${firstImage}" style="width: 100%; height: 110px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />
           <div style="font-weight: 700; font-size: 13px; color: #0F172A; line-height: 1.3; margin-bottom: 4px;">${prop.title}</div>
           <div style="font-size: 11px; color: #64748B; margin-bottom: 6px;">${prop.areaName}, ${prop.city}</div>
           <div style="font-size: 14px; font-weight: 800; color: #059669; margin-bottom: 8px;">${priceFormatted}</div>

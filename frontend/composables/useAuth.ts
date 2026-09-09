@@ -62,16 +62,17 @@ export const useAuth = () => {
     path: '/'
   })
 
-  const userCookie = useCookie<UserProfile>('gangchil_user', {
+  const userCookie = useCookie<UserProfile | null>('gangchil_user', {
     maxAge: 60 * 60 * 24 * 7,
     sameSite: 'lax',
     path: '/',
-    default: () => defaultBuyerUser
+    default: () => null
   })
 
   const user = computed(() => userCookie.value || defaultBuyerUser)
+  const currentUser = computed(() => userCookie.value)
   const token = computed(() => tokenCookie.value)
-  const isAuthenticated = computed(() => !!tokenCookie.value || !!userCookie.value)
+  const isAuthenticated = computed(() => !!tokenCookie.value && !!userCookie.value)
   const isAgent = computed(() => userCookie.value?.role === 'agent')
   const isAdmin = computed(() => userCookie.value?.role === 'admin')
   const isBuyer = computed(() => userCookie.value?.role === 'buyer')
@@ -133,30 +134,37 @@ export const useAuth = () => {
   // Logout
   const logout = async () => {
     try {
-      await fetch(useApiUrl('/auth/logout'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${tokenCookie.value}`
-        }
-      })
+      if (tokenCookie.value) {
+        await fetch(useApiUrl('/auth/logout'), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${tokenCookie.value}`
+          }
+        })
+      }
     } catch {
       //
     }
     tokenCookie.value = null
-    userCookie.value = { ...defaultBuyerUser }
+    userCookie.value = null
   }
 
   const toggleSaveProperty = (propertyId: number) => {
-    if (!userCookie.value.savedProperties) {
-      userCookie.value.savedProperties = []
+    const current = userCookie.value 
+      ? { ...userCookie.value }
+      : { ...defaultBuyerUser, name: 'Guest Buyer', email: '', savedProperties: [], scheduledViewings: [] }
+    
+    if (!Array.isArray(current.savedProperties)) {
+      current.savedProperties = []
     }
-    const idx = userCookie.value.savedProperties.indexOf(propertyId)
+    const idx = current.savedProperties.indexOf(propertyId)
     if (idx > -1) {
-      userCookie.value.savedProperties.splice(idx, 1)
+      current.savedProperties.splice(idx, 1)
     } else {
-      userCookie.value.savedProperties.push(propertyId)
+      current.savedProperties.push(propertyId)
     }
+    userCookie.value = current
   }
 
   const isPropertySaved = (propertyId: number) => {
@@ -164,15 +172,27 @@ export const useAuth = () => {
   }
 
   const addScheduledViewing = async (viewing: any) => {
-    if (!userCookie.value.scheduledViewings) {
-      userCookie.value.scheduledViewings = []
+    const current = userCookie.value 
+      ? { ...userCookie.value }
+      : { 
+          ...defaultBuyerUser, 
+          name: viewing.name || 'Guest Buyer', 
+          email: viewing.email || '', 
+          phone: viewing.phone || '', 
+          savedProperties: [], 
+          scheduledViewings: [] 
+        }
+
+    if (!Array.isArray(current.scheduledViewings)) {
+      current.scheduledViewings = []
     }
     const item = {
       id: Date.now(),
       ...viewing,
       status: 'Confirmed'
     }
-    userCookie.value.scheduledViewings.push(item)
+    current.scheduledViewings.push(item)
+    userCookie.value = current
 
     // Save to MySQL database via Laravel API
     try {
@@ -201,6 +221,7 @@ export const useAuth = () => {
 
   return {
     user,
+    currentUser,
     token,
     isAuthenticated,
     isAgent,

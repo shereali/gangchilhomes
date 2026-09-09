@@ -191,8 +191,8 @@ const selectDemo = (role: 'admin' | 'agent' | 'buyer') => {
   }
 }
 
-const handleLogin = () => {
-  const role = login(email.value, password.value)
+const handleLogin = async () => {
+  const role = await login(email.value, password.value)
   if (role === 'admin') {
     router.push('/admin')
   } else {
@@ -200,9 +200,9 @@ const handleLogin = () => {
   }
 }
 
-const directDemoLogin = () => {
+const directDemoLogin = async () => {
   selectDemo(selectedRole.value)
-  handleLogin()
+  await handleLogin()
 }
 </script>
 

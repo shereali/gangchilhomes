@@ -24,15 +24,6 @@
         <div class="hero-search-wrapper animate-fade-in-up">
           <HeroSearch />
         </div>
-
-        <!-- Quick Division Shortcut Chips -->
-        <div class="hero-quick-chips animate-fade-in">
-          <span class="chip-label">Popular Hubs:</span>
-          <NuxtLink to="/properties?area=Gulshan-2" class="quick-chip">Gulshan-2 Diplomatic Zone</NuxtLink>
-          <NuxtLink to="/properties?area=Purbachal New Town" class="quick-chip">Purbachal Sector 17 & 20</NuxtLink>
-          <NuxtLink to="/properties?area=Bashundhara" class="quick-chip">Bashundhara R/A</NuxtLink>
-          <NuxtLink to="/properties?area=Marine Drive" class="quick-chip">Cox's Bazar Marine Drive</NuxtLink>
-        </div>
       </div>
     </section>
 
@@ -179,7 +170,15 @@
           </p>
         </div>
 
-        <InteractiveMap :properties="properties" />
+        <ClientOnly>
+          <InteractiveMap :properties="properties" />
+          <template #fallback>
+            <div class="map-skeleton-placeholder">
+              <div class="map-skeleton-pulse"></div>
+              <p>Loading Interactive Property Map...</p>
+            </div>
+          </template>
+        </ClientOnly>
       </div>
     </section>
 
@@ -320,7 +319,8 @@ definePageMeta({
 const { properties } = useProperties()
 
 const featuredProperties = computed(() => {
-  return properties.value.filter(p => p.isFeatured)
+  const featured = properties.value.filter(p => p.isFeatured)
+  return featured.length > 0 ? featured.slice(0, 6) : properties.value.slice(0, 6)
 })
 </script>
 
@@ -736,5 +736,33 @@ const featuredProperties = computed(() => {
   .seller-cta-title {
     font-size: 1.6rem;
   }
+}
+
+.map-skeleton-placeholder {
+  width: 100%;
+  height: 520px;
+  background: #0A1128;
+  border-radius: var(--radius-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #CBD5E1;
+  font-size: 0.95rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.map-skeleton-pulse {
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(212, 175, 55, 0.2);
+  border-top-color: var(--color-gold);
+  border-radius: 50%;
+  animation: mapSpin 1s linear infinite;
+}
+
+@keyframes mapSpin {
+  to { transform: rotate(360deg); }
 }
 </style>
