@@ -323,33 +323,35 @@
 .hero-quick-chips {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 24px;
+  gap: 8px;
+  margin-top: 14px;
 }
 
 .chip-label {
-  font-size: 0.85rem;
-  color: #CBD5E1;
-  font-weight: 600;
+  font-size: 0.82rem;
+  color: #334155;
+  font-weight: 700;
 }
 
 .quick-chip {
-  padding: 6px 14px;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 6px 13px;
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
   border-radius: var(--radius-full);
-  color: #FFFFFF;
+  color: #1E293B;
   font-size: 0.8rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
   transition: all var(--transition-fast);
 }
 
 .quick-chip:hover {
-  background: var(--color-emerald);
-  border-color: var(--color-emerald);
+  background: #0A1128;
+  border-color: #0A1128;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(10, 17, 40, 0.2);
 }
 
 @media (max-width: 992px) {

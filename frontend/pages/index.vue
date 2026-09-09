@@ -397,37 +397,6 @@ const featuredProperties = computed(() => {
   margin-bottom: 28px;
 }
 
-.hero-quick-chips {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  font-size: 0.85rem;
-}
-
-.chip-label {
-  color: #CBD5E1;
-  font-weight: 600;
-}
-
-.quick-chip {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #E2E8F0;
-  padding: 5px 12px;
-  border-radius: var(--radius-full);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all var(--transition-fast);
-}
-
-.quick-chip:hover {
-  background: rgba(212, 175, 55, 0.2);
-  border-color: #D4AF37;
-  color: #FFFFFF;
-}
-
 /* 2. Trust Bar */
 .trust-bar-section {
   background: #0F172A;

@@ -89,13 +89,18 @@
 
     <!-- Quick Location Chips -->
     <div class="hero-quick-chips">
-      <span class="chip-label">Trending Searches:</span>
-      <button class="quick-chip" @click="quickSearch('Gulshan')">Gulshan Penthouses</button>
-      <button class="quick-chip" @click="quickSearch('Purbachal')">Purbachal Sector 17 Plots</button>
-      <button class="quick-chip" @click="quickSearch('Bashundhara')">Bashundhara Block M</button>
-      <button class="quick-chip" @click="quickSearch('Marine Drive')">Cox's Bazar Hotel Suites</button>
-      <button class="quick-chip" @click="quickSearch('Dhanmondi')">Dhanmondi Duplexes</button>
-      <button class="quick-chip" @click="quickSearch('Sreemangal')">Sylhet Tea Resorts</button>
+      <span class="chip-label">
+        <svg class="chip-label-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+          <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+        </svg>
+        <span>Trending Searches:</span>
+      </span>
+      <button type="button" class="quick-chip" @click="quickSearch('Gulshan')">Gulshan Penthouses</button>
+      <button type="button" class="quick-chip" @click="quickSearch('Purbachal')">Purbachal Sector 17 Plots</button>
+      <button type="button" class="quick-chip" @click="quickSearch('Bashundhara')">Bashundhara Block M</button>
+      <button type="button" class="quick-chip" @click="quickSearch('Marine Drive')">Cox's Bazar Hotel Suites</button>
+      <button type="button" class="quick-chip" @click="quickSearch('Dhanmondi')">Dhanmondi Duplexes</button>
+      <button type="button" class="quick-chip" @click="quickSearch('Sreemangal')">Sylhet Tea Resorts</button>
     </div>
   </div>
 </template>
@@ -146,3 +151,65 @@ const quickSearch = (term: string) => {
   handleSearch()
 }
 </script>
+
+<style scoped>
+.hero-quick-chips {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 12px 14px 4px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.chip-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  color: #334155;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+
+.chip-label-icon {
+  color: #D97706;
+  flex-shrink: 0;
+}
+
+.quick-chip {
+  padding: 6px 13px;
+  background: #F1F5F9;
+  border: 1px solid #CBD5E1;
+  border-radius: var(--radius-full);
+  color: #1E293B;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.quick-chip:hover {
+  background: #0A1128;
+  border-color: #0A1128;
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(10, 17, 40, 0.2);
+  transform: translateY(-1px);
+}
+
+.quick-chip:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .hero-quick-chips {
+    justify-content: center;
+    padding: 10px 4px 4px;
+  }
+}
+</style>
