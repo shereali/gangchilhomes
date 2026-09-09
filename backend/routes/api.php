@@ -235,7 +235,7 @@ Route::get('/auth/me', function (Request $request) {
         'user' => [
             'id' => 1,
             'name' => 'Chief Admin (Gangchil HQ)',
-            'email' => 'admin@gangchilhomes.com',
+            'email' => env('ADMIN_EMAIL', 'admin@gangchilhomes.com'),
             'role' => 'admin'
         ]
     ]);

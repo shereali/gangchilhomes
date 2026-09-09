@@ -135,7 +135,7 @@ const cbForm = reactive({
 const submitCallback = async () => {
   callbackSubmitted.value = true
   try {
-    await fetch('http://127.0.0.1:8000/api/leads', {
+    await fetch(useApiUrl('/leads'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

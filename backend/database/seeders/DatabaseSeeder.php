@@ -19,14 +19,28 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // 1. Seed Users (RBAC)
+        $adminEmail = env('ADMIN_EMAIL', 'admin@gangchilhomes.com');
+        $adminPassword = env('ADMIN_PASSWORD', 'admin123');
+
         User::updateOrCreate(
-            ['email' => 'admin@gangchilhomes.com'],
+            ['email' => $adminEmail],
             [
                 'name' => 'Chief Admin (Gangchil HQ)',
-                'password' => Hash::make('admin123'),
+                'password' => Hash::make($adminPassword),
                 'email_verified_at' => now(),
             ]
         );
+
+        if ($adminEmail !== 'admin@gangchilhomes.com') {
+            User::updateOrCreate(
+                ['email' => 'admin@gangchilhomes.com'],
+                [
+                    'name' => 'Chief Admin (Gangchil HQ)',
+                    'password' => Hash::make($adminPassword),
+                    'email_verified_at' => now(),
+                ]
+            );
+        }
 
         User::updateOrCreate(
             ['email' => 'agent@gangchilhomes.com'],

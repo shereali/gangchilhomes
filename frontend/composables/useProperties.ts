@@ -785,7 +785,7 @@ export const useProperties = () => {
 
     // Sync with Laravel MySQL API
     try {
-      await fetch('http://127.0.0.1:8000/api/properties', {
+      await fetch(useApiUrl('/properties'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -823,7 +823,7 @@ export const useProperties = () => {
     }
 
     try {
-      await fetch(`http://127.0.0.1:8000/api/properties/${id}`, {
+      await fetch(useApiUrl(`/properties/${id}`), {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
@@ -840,7 +840,7 @@ export const useProperties = () => {
     }
 
     try {
-      await fetch(`http://127.0.0.1:8000/api/properties/${id}`, {
+      await fetch(useApiUrl(`/properties/${id}`), {
         method: 'DELETE'
       })
     } catch {

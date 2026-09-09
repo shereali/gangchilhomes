@@ -1,1 +1,0 @@
-import{g as t,c as o,b as n,j as r,o as s,_ as a}from"./g1Sunx13.js";const l=t({__name:"register",setup(c){return r().replace("/signup"),(u,p)=>{const e=a;return s(),o("div",null,[n(e)])}}});export{l as default};

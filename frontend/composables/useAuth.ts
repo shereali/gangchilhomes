@@ -96,7 +96,7 @@ export const useAuth = () => {
     
     // Try Sanctum Backend API if available
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/auth/login', {
+      const response = await fetch(useApiUrl('/auth/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: cleanEmail, password })
@@ -133,7 +133,7 @@ export const useAuth = () => {
   // Logout
   const logout = async () => {
     try {
-      await fetch('http://127.0.0.1:8000/api/auth/logout', {
+      await fetch(useApiUrl('/auth/logout'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ export const useAuth = () => {
 
     // Save to MySQL database via Laravel API
     try {
-      await fetch('http://127.0.0.1:8000/api/schedule-viewing', {
+      await fetch(useApiUrl('/schedule-viewing'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

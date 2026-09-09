@@ -1,0 +1,97 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: gangchil-frontend-1
+    restart: unless-stopped
+    environment:
+      NUXT_PUBLIC_API_BASE: /api
+      NUXT_API_BASE_SERVER: http://backend:8000/api
+    depends_on:
+      backend:
+        condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:3000/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+    ports:
+      - "127.0.0.1:3004:3000"
+    networks:
+      - default
+      - caddy_net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: gangchil-backend-1
+    restart: unless-stopped
+    environment:
+      APP_NAME: Gangchil
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_KEY: ${APP_KEY}
+      APP_URL: https://gangchil.softcredible.com
+      DB_CONNECTION: mysql
+      DB_HOST: ${DB_HOST:-gangchil-db-1}
+      DB_PORT: 3306
+      DB_DATABASE: gangchil
+      DB_USERNAME: gangchil_user
+      DB_PASSWORD: ${DB_PASSWORD}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@softcredible.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      MAIL_MAILER: ${MAIL_MAILER:-log}
+      MAIL_FROM_ADDRESS: ${MAIL_FROM_ADDRESS:-contact@softcredible.com}
+      MAIL_FROM_NAME: ${MAIL_FROM_NAME:-Gangchil}
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/up"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    volumes:
+      - backend-storage:/var/www/html/storage
+    ports:
+      - "127.0.0.1:8004:8000"
+    networks:
+      - default
+      - caddy_net
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8
+    container_name: gangchil-db-1
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: gangchil
+      MYSQL_USER: gangchil_user
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -u root -p\"$$MYSQL_ROOT_PASSWORD\" --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+    networks:
+      default:
+        aliases:
+          - gangchil-db-1
+          - gangchil-db
+
+volumes:
+  backend-storage:
+  db-data:
+
+networks:
+  default:
+    name: gangchil_default
+  caddy_net:
+    external: true
