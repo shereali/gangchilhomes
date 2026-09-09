@@ -1,0 +1,13 @@
+node_modules
+*/node_modules
+frontend/node_modules
+.output
+frontend/.output
+.nuxt
+frontend/.nuxt
+dist
+vendor
+backend/vendor
+.git
+.github
+*.log
